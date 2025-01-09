@@ -1,0 +1,24 @@
+% Definiáljuk a kiinduló árat
+initial_price = 100;
+
+% Valószínűségek és változások az első és a második évben
+probabilities = [1/3, 1/3, 1/3];
+changes = [1.10, 1.00, 1.30];
+
+% Lehetséges árak az első év végén
+prices_first_year = initial_price * changes;
+
+% Lehetséges árak a második év végén
+prices_second_year = [];
+for i = 1:length(prices_first_year)
+    prices_second_year = [prices_second_year, prices_first_year(i) * changes];
+end
+
+% Valószínűségek hozzárendelése a második év végi árakhoz
+probabilities_second_year = repmat(probabilities, 1, length(prices_first_year));
+
+% Részvényár várható értékének kiszámítása
+expected_price = sum(prices_second_year .* probabilities_second_year);
+
+disp('Részvényár várható értéke 2 év múlva:');
+disp(expected_price); % Numerikus érték
