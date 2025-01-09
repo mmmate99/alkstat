@@ -1,0 +1,20 @@
+
+A kérdésben az érdekel minket, hogy mekkora a valószínűsége annak, hogy a várakozási idő 2 percnél hosszabb. Az exponenciális eloszlás esetében a következő formulát használhatjuk a várakozási idő nagyobb, mint egy adott érték valószínűségének számítására:
+
+𝑃(𝑋>𝑥)=𝑒−𝜆𝑥
+Itt 𝜆=12 és 𝑥=2, így a valószínűség:
+𝑃(𝑋>2)=𝑒−12⋅2=𝑒−1
+Tehát a válasz: A, 
+𝑒−1.
+
+Az  𝑒−1 numerikus értéke körülbelül 0,3679.
+MATLAB kód:
+
+matlab
+lambda = 1/2; % Az eloszlás paramétere
+x = 2; % A vizsgált időpont (2 perc)
+
+% A valószínűség számítása
+probability = exp(-lambda * x);
+
+disp(probability);
