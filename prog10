@@ -1,0 +1,24 @@
+% Definiáljuk a halmazokat
+halmaz1 = [7, -1, 4, 4];
+halmaz2 = [6, -2, 2, 10];
+
+% Készítsünk egy mátrixot az összes lehetséges kombinációval
+osszeg_matrix = zeros(length(halmaz1), length(halmaz2));
+
+for i = 1:length(halmaz1)
+    for j = 1:length(halmaz2)
+        osszeg_matrix(i, j) = halmaz1(i) + halmaz2(j);
+    end
+end
+
+% Számoljuk meg a pozitív összegeket
+pozitiv_osszeg = sum(osszeg_matrix(:) > 0);
+
+% Számoljuk ki az összes lehetséges kombináció számát
+osszes_kombinacio = length(halmaz1) * length(halmaz2);
+
+% Számoljuk ki a valószínűséget
+valoszinuseg = pozitiv_osszeg / osszes_kombinacio;
+
+disp('Annak valószínűsége, hogy a kapott számok összege pozitív:');
+disp(valoszinuseg);
