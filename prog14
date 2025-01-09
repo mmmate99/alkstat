@@ -1,0 +1,20 @@
+% Összes lehetséges kombinációk száma három dobókocka esetén
+total_combinations = 6^3; % 6 x 6 x 6 = 216
+
+% Kedvező események (összeg = 7) száma
+favorable_combinations = 0;
+for i = 1:6
+    for j = 1:6
+        for k = 1:6
+            if (i + j + k) == 7
+                favorable_combinations = favorable_combinations + 1;
+            end
+        end
+    end
+end
+
+% Valószínűség számítása
+probability = favorable_combinations / total_combinations;
+
+disp('Annak valószínűsége, hogy a dobott számok összege 7:');
+disp(probability);
