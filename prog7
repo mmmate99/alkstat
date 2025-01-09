@@ -1,0 +1,47 @@
+1. lépés: A konstans meghatározása
+Az 𝑓𝑋(𝑥) sűrűségfüggvény teljes területe 1 kell, hogy legyen az ∣𝑥∣≤103 tartományban. Az integrál segítségével meghatározzuk 𝐴 értékét.
+
+MATLAB Kód
+matlab
+% Definiáljuk a szimbolikus változókat
+syms x A
+
+% Az sűrűségfüggvény meghatározása
+f_X = A * abs(x);
+
+% Az integrál feltétele az, hogy az f_X(x) teljes területe 1 legyen
+A_eq = int(f_X, x, -10/3, 10/3) == 1;
+
+% Oldjuk meg A-ra
+A_val = double(solve(A_eq, A));
+disp('A értéke:');
+disp(A_val); % Numerikus érték
+
+2. lépés: Várható érték 
+𝐸(𝑋) kiszámításaA 𝐸(𝑋) várható érték kiszámítása az integrál segítségével:
+
+𝐸(𝑋)=∫−10/3/10/3𝑥𝑓𝑋(𝑥)𝑑𝑥
+
+MATLAB Kód
+matlab
+% Várható érték kiszámítása (E(X))
+E_X = int(x * subs(f_X, A, A_val), x, -10/3, 10/3);
+disp('E(X) várható értéke:');
+disp(double(E_X)); % Numerikus érték
+
+3. lépés: Variancia 
+𝐷2(𝑋) kiszámításaA variancia 𝐷2(𝑋) kiszámítása az 𝐸(𝑋2) és 𝐸(𝑋) segítségével:
+
+𝐸(𝑋2)=∫−10/3/10/3𝑥2𝑓𝑋(𝑥)𝑑𝑥𝐷2(𝑋)=𝐸(𝑋2)−(𝐸(𝑋))2
+
+MATLAB Kód
+matlab
+% E(X^2) kiszámítása
+E_X2 = int(x^2 * subs(f_X, A, A_val), x, -10/3, 10/3);
+disp('E(X^2) értéke:');
+disp(double(E_X2)); % Numerikus érték
+
+% Variancia kiszámítása (D^2(X))
+D2_X = E_X2 - (E_X)^2;
+disp('D^2(X) variancia értéke:');
+disp(double(D2_X)); % Numerikus érték
