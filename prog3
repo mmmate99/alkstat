@@ -1,0 +1,21 @@
+% Adatok
+productions = [245, 206, 1390, 159]; % Napi gyártás darabszáma
+reject_rates = [0.04, 0.03, 0.15, 0.07]; % Selejtarány
+
+% Összes gyártás
+total_production = sum(productions);
+
+% P(A_i) és P(B | A_i)
+P_A = productions / total_production; % Gépenkénti gyártási valószínűség
+P_B_given_A = 1 - reject_rates; % Jó alkatrész valószínűsége gépenként
+
+% Nevező számítása
+denominator = sum(P_B_given_A .* P_A);
+
+% Számláló számítása
+numerator = P_B_given_A(4) * P_A(4);
+
+% Végső valószínűség
+P_A4_given_B = numerator / denominator;
+
+disp(P_A4_given_B);
