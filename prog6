@@ -1,0 +1,26 @@
+Eloszlásfüggvény (CDF) meghatározása
+Az 𝐿 jelölje a két rész közül a hosszabbat. Az 𝐿 eloszlásfüggvényének nem-konstans része:
+
+𝐹𝐿(𝑥)=𝑥−77,7<𝑥<14
+
+% Definiáljuk az eloszlásfüggvényt (CDF)
+syms L
+
+% Eloszlásfüggvény nem-konstans része
+FL = piecewise(0 < L & L < 7, 0, 7 <= L & L < 14, (L-7)/7);
+
+% Az adott valószínűség kiszámítása P(19/4 < L < 103/8)
+x1 = 19/4; % Alsó határ (19/4 = 4.75)
+x2 = 103/8; % Felső határ (103/8 = 12.875)
+P = subs(FL, L, x2) - subs(FL, L, x1);
+
+disp('P(19/4 < L < 103/8) valószínűsége:');
+disp(double(P)); % Numerikus érték
+
+% Sűrűségfüggvény (PDF) meghatározása
+pdf = diff(FL, L); 
+
+% Várható érték kiszámítása (E(L))
+E_L = int(L * pdf, L, 7, 14); % Integrál a 7-től 14-ig tartó intervallumon
+disp('L várható értéke (E(L)):');
+disp(double(E_L)); % Numerikus érték
