@@ -1,0 +1,12 @@
+% Definiáljuk a szimbolikus változókat
+n = 7; % Érmék száma
+p = 0.5; % Fej vagy írás valószínűsége
+
+% Binomiális eloszlás paraméterei
+k = 4; % Írások száma (k-1 = 3, azaz 1-gyel több írás, mint fej)
+
+% Binomiális valószínűség számítása
+probability = nchoosek(n, k) * p^k * (1-p)^(n-k);
+
+disp('Valószínűség, hogy 7 érme feldobásakor 1-gyel több írást kapunk, mint fejet:');
+disp(probability); % Numerikus érték
