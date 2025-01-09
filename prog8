@@ -1,0 +1,27 @@
+% Az összes golyó száma és eloszlásuk
+total_balls = 4 + 3 + 3; % Összes golyó száma
+kek = 4; % Kék golyók száma
+piros = 3; % Piros golyók száma
+sarga = 3; % Sárga golyók száma
+
+% Húzott golyók száma és eloszlásuk
+huzott_kek = 3; % Húzott kék golyók száma
+huzott_piros = 2; % Húzott piros golyók száma
+huzott_sarga = 0; % Húzott sárga golyók száma
+
+% Kombináció kiszámítása (nchoosek)
+ways_to_draw_kek = nchoosek(kek, huzott_kek); % Kék golyók húzásának száma
+ways_to_draw_piros = nchoosek(piros, huzott_piros); % Piros golyók húzásának száma
+ways_to_draw_sarga = nchoosek(sarga, huzott_sarga); % Sárga golyók húzásának száma
+
+% Összes lehetséges húzás (5 golyó húzása 10 golyóból)
+ways_to_draw_total = nchoosek(total_balls, huzott_kek + huzott_piros + huzott_sarga);
+
+% A kedvező események száma
+ways_to_draw_favorable = ways_to_draw_kek * ways_to_draw_piros * ways_to_draw_sarga;
+
+% Valószínűség kiszámítása
+probability = ways_to_draw_favorable / ways_to_draw_total;
+
+disp('Valószínűség, hogy 3 kék, 2 piros és 0 sárga golyót húzunk:');
+disp(probability); % Numerikus érték
