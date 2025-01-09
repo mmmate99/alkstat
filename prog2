@@ -1,0 +1,23 @@
+Az egyenletes eloszlás (Uniform distribution) sűrűségfüggvénye az [𝑎,𝑏] intervallumon belül állandó, és így számolható a valószínűség:
+
+𝑃(𝑎≤𝑇≤𝑏)=𝑏−𝑎𝐵−𝐴 Itt 𝐴=3/5 és 𝐵=2. A kérdéses valószínűség 𝑃(6/5<𝑇<8/5).
+
+Először számoljuk ki az [6/5,8/5] intervallum hosszát:
+
+8/5−6/5=2/5
+Majd számoljuk ki az eredeti 
+[3/5,2] intervallum hosszát:
+2−3/5=2−0.6=1.4=7/5
+
+Formula:
+
+𝑃(6/5<𝑇<8/5)=2/5/7/5=2/7
+Tehát a helyes válasz: 2/7.
+
+Ezt MATLAB-mal is meg lehet erősíteni a következő kóddal:
+
+matlab
+A = 3/5;
+B = 2;
+interval_length = (8/5 - 6/5) / (B - A);
+disp(interval_length);
