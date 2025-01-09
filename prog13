@@ -25,3 +25,34 @@ if abs(t) > t_critical
 else
     disp('Elfogadjuk a gyártó állítását, mivel |t| <= t_critical.');
 end
+
+
+vagy 
+
+% Adott adatok
+n = 8; % Minta elemszáma
+sum_X = 1353.7557;
+sum_X2 = 229175.3012;
+mu_0 = 170; % Névleges tömeg
+
+% Minta átlagának és szórásának meghatározása
+X_bar = sum_X / n;
+S = sqrt((sum_X2 - (sum_X^2 / n)) / (n - 1));
+
+% t-statisztika kiszámítása
+t = (X_bar - mu_0) / (S / sqrt(n));
+disp('t-statisztika értéke:');
+disp(t);
+
+% Kritikus érték meghatározása a t-eloszlás táblázatból
+t_critical = 2.998; % Kritikus érték t7(0.99) esetén
+
+disp('Kritikus érték (t_critical) 0.01 szignifikanciaszinten:');
+disp(t_critical);
+
+% Eredmények összehasonlítása
+if abs(t) > t_critical
+    disp('Elvetjük a gyártó állítását, mivel |t| > t_critical.');
+else
+    disp('Elfogadjuk a gyártó állítását, mivel |t| <= t_critical.');
+end
