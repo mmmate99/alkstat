@@ -1,0 +1,19 @@
+% Definiáljuk az adott sűrűségfüggvényt
+syms x A
+
+% Az integrál feltétele az, hogy az f_X(x) teljes területe 1 legyen
+f_X = A / (6 * x^2);
+A_eq = int(f_X, x, 3, inf) == 1;
+
+% Oldjuk meg A-ra
+A_val = solve(A_eq, A);
+disp('A értéke:');
+disp(double(A_val)); % Numerikus érték
+
+% Az adott valószínűség kiszámítása
+x1 = 19 / 4; % Alsó határ
+x2 = 41 / 4; % Felső határ
+f_X_subs = subs(f_X, A, A_val); % Behelyettesítjük A értékét
+P = int(f_X_subs, x, x1, x2);
+disp('P(19/4 < X < 41/4) valószínűsége:');
+disp(double(P)); % Numerikus érték
