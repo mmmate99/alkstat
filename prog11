@@ -1,0 +1,31 @@
+% Adatok meghatározása
+cedulak = [33, 13, 32, 23, 11, 31, 21, 31, 32];
+X = floor(cedulak / 10); % Első számjegy
+Y = mod(cedulak, 10); % Második számjegy
+
+% Várható értékek kiszámítása
+E_X = mean(X);
+E_Y = mean(Y);
+
+% E(X*Y) kiszámítása
+E_XY = mean(X .* Y);
+
+% Kovariancia számítása
+Cov_XY = E_XY - E_X * E_Y;
+
+disp('X és Y átlagai (E(X), E(Y)):');
+disp(E_X);
+disp(E_Y);
+
+disp('E(XY):');
+disp(E_XY);
+
+disp('Cov(X,Y):');
+disp(Cov_XY);
+
+% Ellenőrizni kell, hogy a kovariancia nulla-e (függetlenség)
+if Cov_XY == 0
+    disp('X és Y függetlenek.');
+else
+    disp('X és Y nem függetlenek.');
+end
