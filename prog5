@@ -1,0 +1,17 @@
+n = 14; % Összes ital száma
+k = 5; % Elfogyasztandó italok száma
+
+% Permutáció kiszámítása
+ways_to_drink = factorial(n) / factorial(n - k);
+disp('Hányféleképpen ihatsz 5 italt a 14-ből:');
+disp(ways_to_drink);
+
+/*feladat2*/
+
+n_remaining = 9; % Megmaradt italok száma
+k_gift = 2; % Kiválasztandó italok száma az ajándékhoz
+
+% Kombináció kiszámítása
+ways_to_choose_gift = nchoosek(n_remaining, k_gift);
+disp('Hányféleképpen választhatod ki az ajándékot:');
+disp(ways_to_choose_gift);
