@@ -1,0 +1,420 @@
+
+
+Ugrás a tartalomra
+A Gmail használata képernyőolvasóval
+Beszélgetések
+15 GB/10,45 GB használatban
+Feltételek · Adatvédelem · Programszabályzat
+Legutóbbi fióktevékenység: 0 perccel ezelőtt
+Jelenleg 1 másik helyen van használatban · Részletek
+clf; clear; clc;
+% 1. ----- Egy részvény kiinduló ára 100 arany
+% MATLAB script to calculate the expected value of a stock price after 2 years
+
+% Initial stock price
+initial_price = 100;
+
+% Possible percentage changes and their probabilities
+changes = [-0.30, 0.20, -0]; % -20%, 30%, and 20% changes
+probabilities = [1/3, 1/3, 1/3]; % Equal probabilities
+
+% First year possible prices
+first_year_prices = initial_price * (1 + changes);
+
+% Second year possible prices and probabilities
+second_year_prices = [];
+second_year_probabilities = [];
+
+for i = 1:length(first_year_prices)
+    for j = 1:length(changes)
+        % Calculate the price after two years
+        new_price = first_year_prices(i) * (1 + changes(j));
+        second_year_prices = [second_year_prices, new_price];
+
+        % Calculate the probability of this price
+        new_probability = probabilities(i) * probabilities(j);
+        second_year_probabilities = [second_year_probabilities, new_probability];
+    end
+end
+
+% Calculate the expected value
+numerator = sum(second_year_prices .* second_year_probabilities * 3^2); % Multiply by 3^2 to handle fractions
+expected_value_fraction = [numerator, 3^2]; % Numerator and denominator of the fraction
+
+
+% Display the result as a fraction
+disp(['The expected value of the stock price after 2 years is: ', num2str(expected_value_fraction(1)/expected_value_fraction(2))]);
+format rational;
+expected_value_fraction(1)/expected_value_fraction(2)
+
+%% 2. ----- Cérnás elvágós
+clf;clc;clear;
+% MATLAB script to solve the given problem
+
+% Problem parameters
+total_length = 12; % Total length of the cérna
+
+% Define the sűrűségfüggvény of L
+f_L = @(l) 2 * (1 / total_length) .* (l >= total_length / 2 & l <= total_length); % PDF
+
+% 1. Nem konstans rész az eloszlásfüggvényben
+fprintf("Eloszlásfüggvény nem konstans része: F(L) = 2 * (L / %d) - 1, ahol L között %.2f és %.2f\n", ...
+    total_length, total_length / 2, total_length);
+
+% 2. Kiszámítás P(13/2 < L < 173/16)
+L_lower = 13 / 2; % Alsó határ
+L_upper = 173 / 16; % Felső határ
+
+% Calculate the probability P(13/2 < L < 173/16)
+P = integral(f_L, L_lower, L_upper);
+fprintf("P(13/2 < L < 173/16) = %.4f\n", P);
+
+% 3. Várható érték kiszámítása E(L)
+E_L = integral(@(l) l .* f_L(l), total_length / 2, total_length);
+fprintf("E(L) = %.4f\n", E_L);
+
+%% 3. ----- Kék piros és sárga golyók
+clf; clear; clc;
+% MATLAB script to calculate the probability of drawing 2 blue, 1 red, and 2 yellow balls
+
+% Parameters
+N_k = 3; % Number of blue balls
+N_p = 4; % Number of red balls
+N_s = 4; % Number of yellow balls
+N = N_k + N_p + N_s; % Total number of balls
+
+k = 2; % Number of blue balls drawn
+p = 1; % Number of red balls drawn
+s = 2; % Number of yellow balls drawn
+n = k + p + s; % Total number of balls drawn
+
+% Calculate the probability using hypergeometric distribution formula
+numerator = nchoosek(N_k, k) * nchoosek(N_p, p) * nchoosek(N_s, s);
+denominator = nchoosek(N, n);
+probability = numerator / denominator;
+
+% Display the result
+disp(['The probability of drawing 2 blue, 1 red, and 2 yellow balls is: ', num2str(probability)]);
+format rational;
+probability
+
+%% 4.
+% Egy forgalmas benzinkútnál a tapasztalatok szerint a sorbanállás pillanatától a tankolás megkezdéséig eltelt percek száma exponenciális eloszlású. Tudjuk, hogy átlagosan 9
+% percet kell várni. Egy barátom felhív a sorbaállás kezdetekor, és azt mondja 14 perc múlva odajön.
+
+% itt a megoldás e^-(14/9)
+
+%% 5. ----- Valségi változó sűrűségfüggvénye abszolút értékes A|x|
+clf; clear; clc;
+syms x A
+
+% Define the PDF f_X(x)
+f_X = A * abs(x); % PDF: f_X(x) = A * |x| for |x| <= 3
+
+% 1. Calculate A using the normalization condition: ∫ f_X(x) dx = 1
+normalization_integral = int(f_X, x, -3, 3);
+A_value = solve(normalization_integral == 1, A);
+
+% Substitute A into the PDF
+f_X = subs(f_X, A, A_value);
+
+% 2. Calculate E(X): Expected value
+E_X = int(x * f_X, x, -3, 3);
+
+% 3. Calculate D^2(X): Variance
+E_X2 = int(x^2 * f_X, x, -3, 3); % Expected value of X^2
+D_X2 = E_X2 - E_X^2; % Variance formula
+
+% Display results
+disp(['A = ', char(A_value)]);
+disp(['E(X) = ', char(E_X)]);
+disp(['D^2(X) = ', char(D_X2)]);
+
+%% 6. ----- Valségi változó sűrűségfüggvény 2 és végtelen között
+clf; clear; clc;
+% MATLAB script to calculate A and P(6 < X < 37/4) for a given PDF
+
+syms x A
+
+% Define the PDF f_X(x)
+f_X = A / (3 * x^2); % PDF: f_X(x) = A / (4 * x^2) for x > 2
+
+% 1. Calculate A using the normalization condition: ∫ f_X(x) dx = 1
+normalization_integral = int(f_X, x, 2, inf);
+A_value = solve(normalization_integral == 1, A);
+
+% Substitute A into the PDF
+f_X = subs(f_X, A, A_value);
+
+% 2. Calculate P(6 < X < 37/4)
+lower_bound = 21/4;
+upper_bound = 13 / 2;
+P_X = int(f_X, x, lower_bound, upper_bound);
+P_X_value = double(P_X);
+
+% Display results
+disp(['A = ', char(A_value)]);
+disp(['P(6 < X < 37/4) = ', char(P_X)]);
+disp(['P(6 < X < 37/4) (numerical) = ', num2str(P_X_value)]);
+
+%% 7. ----- 5 érmét feldobva 1el több írást kapunk
+clc;clear;clf;
+% MATLAB script to calculate the probability of getting 1 more tails than heads
+
+% Parameters
+n = 5; % Number of coin tosses
+k = (n + 1) / 2; % Number of tails (1 more than heads)
+p = 0.5; % Probability of getting tails
+
+% Ensure k is an integer
+if mod(k, 1) ~= 0
+    error('k must be an integer. Check the formula for k.');
+end
+
+% Calculate probability using the binomial formula
+P_k = nchoosek(n, k) * p^k * (1 - p)^(n - k);
+
+% Display the result
+disp(['The probability of getting 1 more tails than heads is: ', num2str(P_k)]);
+P_k
+
+%% 8. ----- Van 16 különböző italod, 1-1 üvegnyi.
+clc;clf;clear;
+% MATLAB script to calculate the number of ways to drink 3 beverages in order from 16 different ones
+
+% Parameters
+n = 16; % Total number of beverages
+k = 3; % Number of beverages chosen
+
+% Calculate the number of permutations
+P_nk = factorial(n) / factorial(n - k);
+
+% Display the result
+disp(['The number of ways to drink 4 beverages in order is: ', num2str(P_nk)]);
+
+%utána ajándék
+nchoosek(n-k, 2) %maradék az (n-k) és 2 üveggel viszünk ajiba
+%% 9. ----- Alkatrész gyártása egy üzemben 4 géppel
+
+% MATLAB script to calculate the probability using Bayes' theorem
+
+% Data: Number of units produced by each machine
+N = [169, 187, 429, 215]; % Daily production by each machine
+
+% Defect rates
+r = [0.11, 0.11, 0.06, 0.07]; % Defect rates for each machine
+
+% Good rates (complement of defect rates)
+p = 1 - r;
+
+% Total production
+total_production = sum(N);
+
+% Prior probabilities for each machine
+P_G = N / total_production;
+
+% Probability of producing a good item given the machine
+P_J_given_G = p;
+
+% Total probability of a good item (P(J))
+P_J = sum(P_J_given_G .* P_G);
+
+% Probability that the first machine produced a good item (P(G1 | J))
+P_G1_given_J = (P_J_given_G(3) * P_G(3)) / P_J;
+
+% Convert to fraction form using symbolic math
+syms fraction_result;
+fraction_result = sym(P_G1_given_J);
+
+% Display the result as a fraction
+disp(['The probability that the first machine produced the good item is: ', char(fraction_result)]);
+
+%% 10. ----- Egy boltban sorbanállással töltött T idő
+clf;clc;clear;
+% MATLAB script to calculate the probability for a uniform distribution
+
+% Parameters of the uniform distribution
+a = 3 / 5; % Lower bound of the distribution
+b = 1; % Upper bound of the distribution
+
+% Bounds for the probability calculation
+lower_bound = 31 / 40;
+upper_bound = 37 / 40;
+
+% Uniform distribution density
+f_T = 1 / (b - a);
+
+% Probability calculation
+P_T = f_T * (upper_bound - lower_bound);
+
+% Display the result
+disp(['The probability that T is between 31/40 and 37/40 is: ', num2str(P_T)]);
+P_T
+
+%% 11. ----- Két halmaz számait véletlenszerűen összeadva nempozitív valsége
+clf;clear;clc;
+% MATLAB script to calculate the probability that the sum of two selected numbers is negative
+
+% Define the sets
+A = [1, 6, -6, -7, 9, -9];
+B = [8, 9, -4, -2, 6, 0, 2];
+
+% Total number of pairs
+total_pairs = length(A) * length(B);
+
+% Count the number of favorable cases (sum < 0)
+favorable_cases = 0;
+for a = A
+    for b = B
+        if a + b <= 0
+            favorable_cases = favorable_cases + 1;
+        end
+    end
+end
+
+% Calculate the probability
+P = favorable_cases / total_pairs;
+
+% Display the result
+disp(['The probability that the sum of two selected numbers is negative is: ', num2str(P)]);
+P
+
+%% 12. ----- Dobjunk fel egyszerre három szabályos dobókockát. Mennyire valós h 15 lesz az összegük?
+clc;clf;clear;
+% Total number of outcomes
+sides = 6; % Number of sides on a die
+total_outcomes = sides^3; %itt kell átírni a hatványt (mennyit dobunk)
+
+% Count favorable outcomes
+favorable_cases = 0;
+for i = 1:sides
+    for j = 1:sides
+        for k = 1:sides
+            if i + j + k == 13
+                favorable_cases = favorable_cases + 1;
+            end
+        end
+    end
+end
+
+% Calculate probability
+P = favorable_cases / total_outcomes;
+
+% Display the result
+disp(['The probability of rolling a sum of 15 with three dice is: ', num2str(P)]);
+P
+
+%% 13. ----- Cédulás kovaranciás
+% MATLAB script for analyzing dependence and covariance of two random variables
+
+% Input: Data from cédulák (numbered notes)
+data = [13, 31, 31, 32, 31, 22, 33, 12, 21, 21]; % List of cédulák
+
+% Extract X and Y values
+X = floor(data / 10); % First digit (tens place)
+Y = mod(data, 10);    % Second digit (units place)
+
+% Unique values in X and Y
+unique_X = unique(X);
+unique_Y = unique(Y);
+
+% Calculate probabilities
+n = length(data); % Total number of data points
+joint_prob = zeros(length(unique_X), length(unique_Y));
+
+% Joint probabilities P(X=x, Y=y)
+for i = 1:length(unique_X)
+    for j = 1:length(unique_Y)
+        joint_prob(i, j) = sum(X == unique_X(i) & Y == unique_Y(j)) / n;
+    end
+end
+
+% Marginal probabilities P(X=x) and P(Y=y)
+P_X = sum(joint_prob, 2); % Summing over rows
+P_Y = sum(joint_prob, 1); % Summing over columns
+
+% Check independence
+independent = true;
+for i = 1:length(unique_X)
+    for j = 1:length(unique_Y)
+        if abs(joint_prob(i, j) - P_X(i) * P_Y(j)) > 1e-6 % Tolerance for numerical error
+            independent = false;
+            break;
+        end
+    end
+    if ~independent
+        break;
+    end
+end
+
+% Calculate expected values E(X), E(Y), and E(XY)
+E_X = sum(unique_X .* P_X');
+E_Y = sum(unique_Y .* P_Y);
+E_XY = 0;
+for i = 1:length(unique_X)
+    for j = 1:length(unique_Y)
+        E_XY = E_XY + unique_X(i) * unique_Y(j) * joint_prob(i, j);
+    end
+end
+
+% Calculate covariance Cov(X, Y)
+cov_XY = E_XY - E_X * E_Y;
+
+% Display results
+fprintf('Joint Probability Table:\n');
+disp(array2table(joint_prob, 'VariableNames', string(unique_Y), 'RowNames', string(unique_X)));
+
+fprintf('Marginal Probabilities:\n');
+fprintf('P(X=x):\n');
+disp(array2table(P_X, 'VariableNames', "P(X)", 'RowNames', string(unique_X)));
+
+fprintf('P(Y=y):\n');
+disp(array2table(P_Y', 'VariableNames', "P(Y)", 'RowNames', string(unique_Y))); % Transpose P_Y for correct table format
+
+if independent
+    fprintf('X and Y are independent.\n');
+else
+    fprintf('X and Y are not independent.\n');
+end
+
+fprintf('E(X) = %.4f, E(Y) = %.4f, E(XY) = %.4f\n', E_X, E_Y, E_XY);
+fprintf('Cov(X, Y) = %.4f\n', cov_XY);
+%% 14. ----- t-próbás táblázatos Xk és Xk^2 adatokkal
+% MATLAB program for t-test
+clc;clf;clear;
+% Input data
+n = 10; % Sample size
+sum_X = 1605.4366; % Sum of sample values
+sum_X2 = 257769.2035; % Sum of squared sample values
+mu_0 = 160; % Hypothesized mean
+alpha = 0.1; % Significance level
+
+% Step 1: Calculate sample mean
+sample_mean = sum_X / n;
+
+% Step 2: Calculate sample variance and standard deviation
+sample_variance = (sum_X2 - (sum_X^2) / n) / (n - 1);
+sample_std = sqrt(sample_variance);
+
+% Step 3: Calculate t-statistic
+t_stat = (sample_mean - mu_0) / (sample_std / sqrt(n));
+
+% Step 4: Determine critical t-value for two-tailed test
+df = n - 1; % Degrees of freedom
+t_critical = tinv(1 - alpha / 2, df); % Two-tailed critical value
+
+% Step 5: Decision
+if abs(t_stat) > t_critical
+    decision = 'Elutasítjuk a nullhipotézist';
+else
+    decision = 'Elfogadjuk a nullhipotézist';
+end
+
+% Display results
+fprintf('Mintaátlag: %.4f\n', sample_mean);
+fprintf('Minta szórása: %.4f\n', sample_std);
+fprintf('t-érték: %.4f\n', t_stat);
+fprintf('Kritikus t-érték (%.2f szinten): %.4f\n', alpha, t_critical);
+fprintf('Döntés: %s\n', decision);
+summary.txt
+summary.txt megjelenítése.
