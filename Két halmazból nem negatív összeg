@@ -1,0 +1,28 @@
+Az [1, 6, −6, −7, 9, −9] és [8, 9, −4, −2, 6, 0, 2] halmazokból véletlenszerűen választva egy-egy számot, annak az esélye, hogy a kapott számok összege nempozitív: 7. kérdésVálasszon ki egyet: a. 3/7 b. 21/44 c. 19/41 d. Passz. e. 21/43 f. 17/42 g. 19/42
+
+
+A = [1 6 -6 -7 9 -9];
+B = [8 9 -4 -2 6 0 2];
+
+[P_exact, P_numeric] = sum_nonpositive(A,B)
+
+function [P_exact, P_numeric] = sum_nonpositive(A, B)
+% SUM_NONPOSITIVE
+% A, B : numeric vectors
+% Computes P(A+B <= 0) with uniform random choice
+
+    count = 0;
+    total = length(A) * length(B);
+
+    for i = 1:length(A)
+        for j = 1:length(B)
+            if A(i) + B(j) <= 0
+                count = count + 1;
+            end
+        end
+    end
+
+    % Exact and numeric probability
+    P_exact = count / total;
+    P_numeric = double(P_exact);
+end
