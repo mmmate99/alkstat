@@ -1,0 +1,23 @@
+Egy részvény kiinduló ára 100 peták. 
+Egy év múlva, egyforma valószínűséggel 0 , 30 vagy 20 százalékkal változik az ára. 
+A következő évben ugyanez történik, az előző évi változástól függetlenül. 
+Mi 2 év múlva a részvényár várható értéke? 10. kérdésVálasszon ki egyet: a. 1180/9 b. 1306/9 c. 1216/9 d. 1225/9 e. Passz. f. 1198/9 g. 1279/9 h. 1162/9
+
+
+S0 = 100;
+changes = [0 0.3 0.2];
+years = 2;
+
+E_final = expected_stock_price(S0, changes, years)
+
+function E_final = expected_stock_price(S0, changes, years)
+% EXPECTED_STOCK_PRICE
+% S0      : initial stock price
+% changes : vector of relative changes, e.g. [0 0.3 0.2]
+% years   : number of years
+
+    p = 1/length(changes); % egyenlő valószínűség
+    E_factor = sum(1 + changes) * p; % E(1+R)
+    
+    E_final = S0 * E_factor^years;
+end
