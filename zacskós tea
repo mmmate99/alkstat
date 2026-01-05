@@ -1,0 +1,49 @@
+Egy zacskós tea-féle névleges (átlagos) tömege a gyártó állítása szerint 180 gramm. 
+A fogyasztóvédelem emberei véletlenszerűen megvizsgáltak néhány terméket ( X1,...,X10 ) és a következő eredményeket kapták: 
+∑10k=1Xk=1802.3185∑10k=1X2k=325099.5633 p 0.75 0.9 0.95 0.975 0.98 0.99 0.995 t9(p) 0.7027 1.383 1.8331 2.2622 2.3984 2.8214 3.2498 
+
+A töltőtömeg normalitását feltételezve a minta alapján a gyártó állítását α=0.02 szinten 
+
+11. kérdésVálasszon ki egyet: 
+a. elfogadjuk, mivel |t|=0.1353<2.8214 , ahol t9(0.99)=2.8214 
+b. elvetjük, mivel |t|=2.48842>2.2622 , ahol t9(0.975)=2.2622 
+c. elvetjük, mivel |t|=0.1353>−2.2622 , ahol t9(0.975)=2.2622 
+d. elfogadjuk, mivel |t|=2.53926<2.8214 , ahol t9(0.99)=2.8214
+
+
+sumX = 1802.3185;
+sumX2 = 325099.5633;
+n = 10;
+mu0 = 180;
+alpha = 0.02;
+
+decision = t_test_sample(sumX, sumX2, n, mu0, alpha)
+
+function decision = t_test_sample(sumX, sumX2, n, mu0, alpha)
+% T_TEST_SAMPLE
+% sumX  : mintaösszeg
+% sumX2 : négyzetösszeg
+% n     : minta elemszáma
+% mu0   : nullhipotézis szerinti átlag
+% alpha : szignifikancia szint
+
+    % Mintaátlag
+    Xbar = sumX / n;
+    
+    % Mintaszórás
+    S = sqrt((sumX2 - n*Xbar^2)/(n-1));
+    
+    % t-statisztika
+    t = (Xbar - mu0) / (S / sqrt(n));
+    
+    % Kritikus érték kétoldali
+    df = n-1;
+    t_crit = tinv(1-alpha/2, df);
+    
+    % Döntés
+    if abs(t) < t_crit
+        decision = sprintf('Elfogadjuk, |t|=%.4f < %.4f', t, t_crit);
+    else
+        decision = sprintf('Elvetjük, |t|=%.4f > %.4f', t, t_crit);
+    end
+end
