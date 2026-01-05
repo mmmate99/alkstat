@@ -1,0 +1,50 @@
+Egy dobozban 8 cédula van, rajtuk a 21, 21, 11, 11, 23, 12, 23, 32 számokkal. 
+Egy véletlenszerűen kihúzott cédula esetén jelentse X az első, Y a második számjegyét. 
+
+Ekkor X és Y 2. kérdésVálasszon ki egyet: a. függetlenek és cov(X,Y)=19/16 b. nem függetlenek és cov(X,Y)=11/16 c. nem függetlenek és cov(X,Y)=3/16 d. nem függetlenek és cov(X,Y)=−13/16 e. függetlenek és cov(X,Y)=−5/16 f. függetlenek és cov(X,Y)=3/16 g. Passz.
+
+
+
+numbers = [21 21 11 11 23 12 23 32];
+r = digit_covariance(numbers)
+
+function result = digit_covariance(numbers)
+% DIGIT_COVARIANCE
+% numbers: vector of two-digit integers, equally likely
+%
+% Returns structure with:
+% E_X, E_Y, cov_XY, independent (true/false)
+
+    n = length(numbers);
+    
+    % Extract digits
+    X = floor(numbers / 10);   % first digit
+    Y = mod(numbers, 10);      % second digit
+    
+    % Expectations
+    E_X = mean(X);
+    E_Y = mean(Y);
+    E_XY = mean(X .* Y);
+    
+    % Covariance
+    cov_XY = E_XY - E_X * E_Y;
+    
+    % Check independence
+    px = accumarray(X,1) / n;
+    py = accumarray(Y,1) / n;
+    
+    independent = true;
+    for i = 1:n
+        if abs( ...
+           mean(X==X(i) & Y==Y(i)) - px(X(i)) * py(Y(i)) ) > 1e-10
+            independent = false;
+            break;
+        end
+    end
+    
+    % Output
+    result.E_X = E_X;
+    result.E_Y = E_Y;
+    result.cov_XY = cov_XY;
+    result.independent = independent;
+end
