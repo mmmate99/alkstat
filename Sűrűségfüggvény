@@ -1,0 +1,21 @@
+Egy ξ valségi változó sűrűségfüggvénye: f(x)={A/3x^2 ha x>7 máskor 0 alakú valamely A számra. 
+Ekkor A= 1 feleletválasztós kérdés 8. kérdés 14 19 28 20 Passz. 21 23 P(71/4<ξ<39/2)=
+
+
+[A, P_exact, P_numeric] = inverse_square_pdf(7, 71/4, 39/2);
+
+function [A, P_exact, P_numeric] = inverse_square_pdf(a, x1, x2)
+% INVERSE_SQUARE_PDF
+% f(x) = A / (3*x^2), x > a
+%
+% a  : lower bound of support
+% x1 : lower probability bound
+% x2 : upper probability bound
+
+    % Normalize
+    A = 3 * a;
+
+    % Probability
+    P_exact = (A/3) * (1/x1 - 1/x2);
+    P_numeric = double(P_exact);
+end
