@@ -1,0 +1,39 @@
+Egy dobozban 3 kék, 4 piros és 3 sárga golyó van. Visszatevés nélkül húzunk 6 golyót. Ekkor annak a valsége hogy 2,3,1 rendre darabot kapunk a kék, piros és sárga golyókból:
+
+
+total = [3 4 3];   % blue, red, yellow
+drawn = [2 3 1];
+
+[P_exact, P_numeric] = multicolor_hypergeom(total, drawn)
+
+function [P_exact, P_numeric] = multicolor_hypergeom(total, drawn)
+% MULTICOLOR_HYPERGEOM
+% total : vector of available balls per color
+% drawn : vector of drawn balls per color
+%
+% Example:
+% total = [3 4 3]
+% drawn = [2 3 1]
+
+    % Check validity
+    if any(drawn > total)
+        error('Cannot draw more balls than available.');
+    end
+
+    % Total number of balls
+    N = sum(total);
+    n = sum(drawn);
+
+    % Numerator: product of combinations
+    numerator = 1;
+    for i = 1:length(total)
+        numerator = numerator * nchoosek(total(i), drawn(i));
+    end
+
+    % Denominator
+    denominator = nchoosek(N, n);
+
+    % Output
+    P_exact = numerator / denominator;
+    P_numeric = double(P_exact);
+end
