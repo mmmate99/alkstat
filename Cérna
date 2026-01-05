@@ -1,0 +1,36 @@
+Egy 14 méter hosszú cérnát ollóval véletlenszerűen választott helyen elvágunk. 
+Jelölje ξ a keletkezett részek hosszának maximumát.
+ξ eloszlásfüggvényének nem-konstans része: 
+1 feleletválasztós kérdés: F(x)=(x−7)/7, 7<x<14 Passz. F(x)=x/14, 0<x F(x)=x/7, 7<x<14 F(x)=(x−7)/14,0<x<14 
+P(16916<ξ<17116) = Válasz 1 3. kérdés 
+E(ξ) = Válasz 2 3. kérdés
+
+
+
+L = 14;
+a = 169/16;
+b = 171/16;
+
+r = max_piece_uniform(L, a, b)
+
+function result = max_piece_uniform(L, a, b)
+% MAX_PIECE_UNIFORM
+% L  : total length
+% a,b: interval for probability P(a < xi < b)
+%
+% xi = max(U, L-U), where U ~ Uniform(0,L)
+
+    % CDF
+    F = @(x) (x - L/2) ./ (L/2);
+    
+    % Probability
+    P = F(b) - F(a);
+    
+    % Expectation
+    E_xi = (3/4) * L;
+    
+    % Output
+    result.CDF = 'F(x) = (x - L/2)/(L/2),  L/2 < x < L';
+    result.probability = P;
+    result.expectation = E_xi;
+end
