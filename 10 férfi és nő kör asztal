@@ -1,0 +1,31 @@
+Egy kör alakú asztalnál 10 férfi és 10 nő fog vacsorázni. Ha véletlenszerűen ülnek le, akkor annak a valószínûsége, hogy két férfi nem kerül egymás mellé:
+
+
+[P, P_numeric] = no_adjacent_men(10, 10)
+
+function [P, P_numeric] = no_adjacent_men(m, w)
+% NO_ADJACENT_MEN
+% Probability that no two men sit next to each other
+% around a circular table.
+%
+% m : number of men
+% w : number of women (must be >= m)
+%
+% OUTPUT:
+% P         : exact symbolic expression
+% P_numeric : numerical value
+
+    if w < m
+        error('At least as many women as men are required.');
+    end
+    
+    % Favorable arrangements:
+    favorable = factorial(w-1) * factorial(m);
+    
+    % All arrangements:
+    total = factorial(m + w - 1);
+    
+    % Probability
+    P = favorable / total;
+    P_numeric = double(P);
+end
