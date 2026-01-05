@@ -1,0 +1,22 @@
+Egy 19 tagú társaság 3 tagú vezetőséget választ. A vezetőség tisztségei különbözőek (elnök,alelnök,titkár,...) 
+Hányféleképpen választhatnak, ha egy ember legfeljebb egy tisztséget tölthet be? 1 feleletválasztós kérdés 12. kérdés Passz. 5817 5822 5819 5814 5818 5811 
+
+Ha egy ember több tisztséget is betölthet akkor a lehetőségek száma:
+
+
+n = 19;
+k = 3;
+
+[distinct, repeatable] = choose_leadership(n, k)
+
+function [distinct, repeatable] = choose_leadership(n, k)
+% CHOOSE_LEADERSHIP
+% n : total members
+% k : number of positions
+%
+% distinct   : egy ember legfeljebb egy tisztséget tölthet be
+% repeatable : egy ember több tisztséget is betölthet
+
+    distinct = factorial(n) / factorial(n-k); % permutáció
+    repeatable = n^k; % ismétléssel
+end
