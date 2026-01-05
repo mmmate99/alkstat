@@ -1,0 +1,36 @@
+Valamely alkatrész gyártásával egy üzemben négy gép foglalkozik. 
+A gépek rendre 621 , 265 , 492 és 622 darab alkatrészt gyártanak naponta. Az egyes gépeknél a selejtgyártás aránya rendre 3 , 9 , 11 illetve 13 százalék. 
+A kész alkatrészeket egy helyen gyűjtik. A gépek egy napi termeléséből kiveszünk egy alkatrészt, megvizsgáljuk, és jónak találjuk. 
+
+Mennyi annak a valószínűsége, hogy azt a 1. gép gyártotta? 5. kérdésVálasszon ki egyet: a. 60241/182260 b. 60239/182258 c. 60237/182254 d. 30119/91131 e. 60238/182255 f. Passz. g. 60237/182255 h. 60239/182256
+
+
+prod  = [621 265 492 622];
+scrap = [3 9 11 13];
+
+[P_exact, P_numeric] = bayes_machine(prod, scrap, 1)
+
+function [P_exact, P_numeric] = bayes_machine(prod, scrap, idx)
+% BAYES_MACHINE
+% prod  : vector of daily production numbers
+% scrap : vector of scrap rates (in percent)
+% idx   : index of the machine we ask about
+%
+% OUTPUT:
+% P_exact   : exact rational probability
+% P_numeric : numeric probability
+
+    % Good rates
+    good_rate = 1 - scrap/100;
+    
+    % Good parts per machine
+    good_parts = prod .* good_rate;
+    
+    % Probability
+    P_numeric = good_parts(idx) / sum(good_parts);
+    
+    % Exact fraction (scaled)
+    scale = 100;
+    good_scaled = round(good_parts * scale);
+    P_exact = good_scaled(idx) / sum(good_scaled);
+end
